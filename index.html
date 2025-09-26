@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ezafe-Kettenreaktion: Komplexe Besitzverhältnisse</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lexend:wght@600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-primary: #0f172a;
+            --text-secondary: #64748b;
+            --border-color: #e2e8f0;
+            
+            --theme-color: #4f46e5; /* Indigo */
+            --head-color: #0f172a;
+            --link-color: #4338ca;
+            --owner-color: #166534; /* Dark Green */
+            
+            --control-bg: #f1f5f9;
+            --control-active-bg: var(--theme-color);
+            --control-active-text: #ffffff;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            display: grid;
+            place-items: center;
+            min-height: 100vh;
+            padding: 24px;
+            box-sizing: border-box;
+        }
+
+        .main-card {
+            width: 100%;
+            max-width: 900px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.07), 0 4px 6px -2px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+        
+        .card-header { padding: 24px 32px; text-align: center; }
+        .card-header h1 { font-family: 'Lexend', sans-serif; font-size: 1.8em; margin: 0; }
+        .card-header p { color: var(--text-secondary); margin: 4px 0 0 0; }
+        
+        .control-panel {
+            display: flex; justify-content: center; align-items: center; gap: 12px;
+            padding: 16px 32px; background-color: var(--control-bg);
+            border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);
+            flex-wrap: wrap;
+        }
+        .control-btn {
+            padding: 8px 16px; border-radius: 8px; border: none; background-color: transparent;
+            font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.9em;
+            cursor: pointer; transition: all 0.2s ease-in-out; border: 2px solid transparent;
+        }
+        .control-btn.active {
+            background-color: var(--control-active-bg); color: var(--control-active-text);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+        }
+        .control-btn:not(.active):hover { border: 2px solid var(--theme-color); color: var(--theme-color); }
+
+        .visualizer-area { padding: 40px 32px; }
+        .chain-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .chain-link {
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            min-width: 150px;
+        }
+        .chain-link .role {
+            font-size: 0.7em; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 0.5px; margin-bottom: 8px;
+        }
+        .chain-link .word {
+            font-family: 'Lexend', sans-serif;
+            font-size: 2em;
+            font-weight: 700;
+        }
+        .chain-link .word .Ezafe {
+            color: var(--theme-color);
+        }
+        .chain-head { border-color: var(--head-color); }
+        .chain-head .role { color: var(--head-color); }
+        .chain-middle { border-color: var(--link-color); background-color: #eef2ff; }
+        .chain-middle .role { color: var(--link-color); }
+        .chain-owner { border-color: var(--owner-color); }
+        .chain-owner .role { color: var(--owner-color); }
+        
+        .connector { font-size: 2em; color: var(--text-secondary); }
+
+        .analysis-section { padding: 32px; border-top: 1px solid var(--border-color); }
+        .section-title { font-family: 'Lexend', sans-serif; font-size: 1.3em; margin: 0 0 16px 0; display: flex; align-items: center; gap: 8px; }
+        .analysis-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 24px; }
+        .spotlight-card { background-color: #f8fafc; border: 1px solid var(--border-color); border-radius: 12px; padding: 16px; }
+        .spotlight-card h3 { display: flex; align-items: center; gap: 8px; font-family: 'Lexend', sans-serif; margin: 0 0 8px 0; font-size: 1.1em; color: var(--theme-color); }
+        .spotlight-card p { font-size: 0.9em; line-height: 1.6; color: var(--text-secondary); margin: 0; }
+        .spotlight-card code { background-color: var(--bg-color); border: 1px solid var(--border-color); padding: 2px 5px; border-radius: 4px; font-weight: 600; }
+        
+        .logic-explanation p, .logic-explanation ul { font-size: 1em; line-height: 1.7; color: var(--text-primary); }
+        .logic-explanation ul { padding-left: 20px; }
+        .logic-explanation li::marker { color: var(--theme-color); font-weight: bold; }
+        
+        @media (max-width: 700px) {
+            .chain-container { flex-direction: column; gap: 16px; align-items: stretch; }
+            .connector { transform: rotate(90deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <main class="main-card">
+        <header class="card-header">
+            <h1>Ezafe-Kettenreaktion: Komplexe Besitzverhältnisse</h1>
+            <p>Verstehen Sie, wie Kurmancî elegante Ketten bildet, um "A von B von C" auszudrücken.</p>
+        </header>
+        
+        <div class="control-panel" id="control-panel">
+            <button class="control-btn active" data-type="double">Doppelte Kette</button>
+            <button class="control-btn" data-type="triple">Dreifache Kette</button>
+        </div>
+
+        <div class="visualizer-area">
+            <div id="chain-container" class="chain-container">
+                <!-- Content will be injected by JavaScript -->
+            </div>
+        </div>
+        
+        <section class="analysis-section">
+            <h2 class="section-title"><svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" /></svg>Anatomie der Kette</h2>
+            <div class="analysis-grid">
+                <div class="spotlight-card"><h3>1. Der Kopf (Besitz)</h3><p id="analysis-head"></p></div>
+                <div class="spotlight-card"><h3>2. Die Kettenglieder</h3><p id="analysis-middle"></p></div>
+                <div class="spotlight-card"><h3>3. Der Anker (Besitzer)</h3><p id="analysis-owner"></p></div>
+            </div>
+        </section>
+
+        <section class="analysis-section" style="background-color: #f1f5f9;">
+            <h2 class="section-title"><svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" /></svg>Warum diese Struktur? Die Logik der Effizienz</h2>
+            <div class="logic-explanation">
+                <p>Die Ezafe-Kette ist ein extrem elegantes und effizientes System, das typisch für iranische Sprachen ist. Anstatt umständliche Präpositionen wie im Deutschen zu verwenden ("die Tür <strong>von der</strong> Lehrerin"), verknüpft Kurmancî die Substantive direkt über Suffixe.</p>
+                <ul>
+                    <li><strong>Klarheit:</strong> Die Kette hat eine feste, unmissverständliche Reihenfolge: <strong>Besitz -> Besitzer -> Besitzer des Besitzers</strong>. Es gibt keine Mehrdeutigkeit.</li>
+                    <li><strong>Kopffinal (Head-initial):</strong> Das "wichtigste" Wort (der "Kopf" der Phrase, also der eigentliche Besitz) steht ganz am Anfang. Alle folgenden Wörter modifizieren und spezifizieren dieses erste Wort.</li>
+                    <li><strong>Sprachökonomie:</strong> Mit nur einem Suffix pro Verbindung werden komplexe Beziehungen ausgedrückt. Dies macht die Sprache kompakt und fließend.</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const controlPanel = document.getElementById('control-panel');
+            const chainContainer = document.getElementById('chain-container');
+            const analysisHead = document.getElementById('analysis-head');
+            const analysisMiddle = document.getElementById('analysis-middle');
+            const analysisOwner = document.getElementById('analysis-owner');
+
+            const data = {
+                double: {
+                    chain_html: `
+                        <div class="chain-link chain-head">
+                            <div class="role">Kopf (Besitz)</div>
+                            <div class="word">deriy<span class="Ezafe">ê</span></div>
+                        </div>
+                        <div class="connector">→</div>
+                        <div class="chain-link chain-middle">
+                            <div class="role">Kettenglied</div>
+                            <div class="word">mal<span class="Ezafe">a</span></div>
+                        </div>
+                        <div class="connector">→</div>
+                        <div class="chain-link chain-owner">
+                            <div class="role">Anker (Besitzerin)</div>
+                            <div class="word">mamosteyê</div>
+                        </div>`,
+                    analysis: {
+                        head: '<code>deriyê</code> (die Tür): Steht am Anfang. Das Suffix <code>-ê</code> richtet sich nach dem Geschlecht von "derî" (maskulin).',
+                        middle: '<code>mala</code> (des Hauses): Ist Kettenglied. Es wird von "mamosteyê" besessen und besitzt selbst "derî". Das Suffix <code>-a</code> richtet sich nach dem Geschlecht von "mal" (feminin).',
+                        owner: '<code>mamosteyê</code> (der Lehrerin): Ist die letzte Besitzerin in der Kette. Es erhält keine Ezafe-Endung, steht aber im Obliquus-Fall.'
+                    }
+                },
+                triple: {
+                    chain_html: `
+                        <div class="chain-link chain-head">
+                            <div class="role">Kopf (Besitz)</div>
+                            <div class="word">nav<span class="Ezafe">ê</span></div>
+                        </div>
+                        <div class="connector">→</div>
+                        <div class="chain-link chain-middle">
+                            <div class="role">Kettenglied 1</div>
+                            <div class="word">pirtûk<span class="Ezafe">a</span></div>
+                        </div>
+                        <div class="connector">→</div>
+                        <div class="chain-link chain-middle">
+                            <div class="role">Kettenglied 2</div>
+                            <div class="word">keç<span class="Ezafe">a</span></div>
+                        </div>
+                        <div class="connector">→</div>
+                        <div class="chain-link chain-owner">
+                            <div class="role">Anker (Besitzerin)</div>
+                            <div class="word">cîranê</div>
+                        </div>`,
+                    analysis: {
+                        head: '<code>navê</code> (der Name): Ist der Kopf. Das Suffix <code>-ê</code> richtet sich nach dem Geschlecht von "nav" (maskulin).',
+                        middle: '<code>pirtûka</code> und <code>keça</code> sind Kettenglieder. Jedes erhält ein Suffix, das seinem eigenen Geschlecht entspricht (beide feminin, daher <code>-a</code>).',
+                        owner: '<code>cîranê</code> (der Nachbarin): Ist die finale Ankerin der Kette und steht im Obliquus-Fall, der hier mit der Ezafe-Endung für maskuline Nomen identisch aussieht.'
+                    }
+                }
+            };
+
+            function updateDisplay(typeKey) {
+                const typeData = data[typeKey];
+                
+                chainContainer.innerHTML = typeData.chain_html;
+                analysisHead.innerHTML = typeData.analysis.head;
+                analysisMiddle.innerHTML = typeData.analysis.middle;
+                analysisOwner.innerHTML = typeData.analysis.owner;
+                
+                document.querySelectorAll('.control-btn').forEach(btn => btn.classList.remove('active'));
+                document.querySelector(`.control-btn[data-type="${typeKey}"]`).classList.add('active');
+            }
+
+            controlPanel.addEventListener('click', (event) => {
+                if (event.target.matches('.control-btn')) {
+                    const typeKey = event.target.dataset.type;
+                    updateDisplay(typeKey);
+                }
+            });
+
+            // Initial load
+            updateDisplay('double');
+        });
+    </script>
+</body>
+</html>
