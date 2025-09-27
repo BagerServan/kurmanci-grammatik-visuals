@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reflexiv-Pronomen-Labor: xwe (sich)</title>
+    <title>Präpositions-Labor: di navbera ... de (zwischen)</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lexend:wght@600;700&display=swap" rel="stylesheet">
 
     <style>
@@ -17,7 +17,8 @@
             --text-secondary: #64748b;
             --border-color: #e2e8f0;
             
-            --reflexive-color: #0d9488; /* Türkis */
+            /* Neue Farbpalette für dieses Thema */
+            --preposition-color: #334155; /* Schiefergrau */
             --concept-color: #2563eb; /* Blau */
             --grammar-color: #16a34a; /* Grün */
             --example-color: #475569; /* Schiefergrau */
@@ -30,7 +31,7 @@
             display: grid;
             place-items: center;
             min-height: 100vh;
-            padding: 16px; 
+            padding: 16px;
         }
 
         .word-lab-card {
@@ -44,7 +45,7 @@
         }
         
         .card-header { padding: 24px 32px; text-align: center; border-bottom: 1px solid var(--border-color); }
-        .card-header h1 { font-family: 'Lexend', sans-serif; font-size: 2.2em; margin: 0; color: var(--reflexive-color);}
+        .card-header h1 { font-family: 'Lexend', sans-serif; font-size: 2.2em; margin: 0; color: var(--preposition-color);}
         .card-header p { color: var(--text-secondary); margin: 4px 0 0 0; font-size: 1.1em; }
         
         .facet-controls {
@@ -70,15 +71,16 @@
             justify-content: center; 
             gap: 8px;
             color: var(--text-secondary);
+            flex: 1;
         }
         .facet-btn:hover {
             background-color: #f8fafc;
             border-color: #cbd5e1;
         }
         .facet-btn.active {
-            background-color: var(--reflexive-color);
+            background-color: var(--preposition-color);
             color: white;
-            border-color: var(--reflexive-color);
+            border-color: var(--preposition-color);
             box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
         }
 
@@ -103,22 +105,11 @@
             background-color: #f1f5f9;
             border: 2px dashed var(--text-secondary);
         }
-        .formula-part.reflexive-pronoun {
-            background-color: #f0fdfa;
-            border: 2px solid var(--reflexive-color);
-            color: var(--reflexive-color);
+        .formula-part.preposition {
+            background-color: #f1f5f9;
+            border: 2px solid var(--preposition-color);
+            color: var(--preposition-color);
             font-weight: 700;
-        }
-        .formula-arrow {
-            font-size: 1.2em;
-            color: var(--text-secondary);
-            transition: transform 0.4s ease;
-        }
-        .reflexive-arrow {
-            font-weight: bold;
-            font-size: 2em;
-            line-height: 1;
-            transform: rotate(90deg) scaleX(-1);
         }
         
         .analysis-section { padding: 32px; border-top: 1px solid var(--border-color); }
@@ -128,7 +119,7 @@
         .spotlight-card h3 { display: flex; align-items: center; gap: 8px; font-family: 'Lexend', sans-serif; margin: 0 0 8px 0; font-size: 1.1em; }
         .spotlight-card p { font-size: 0.9em; line-height: 1.6; color: var(--text-secondary); margin: 0; }
         .spotlight-card code { font-family: monospace; background-color: var(--bg-color); border: 1px solid var(--border-color); padding: 2px 5px; border-radius: 4px; color: var(--text-primary); }
-        .spotlight-card strong.highlight { color: var(--reflexive-color); font-weight: 600; }
+        .spotlight-card strong.highlight { color: var(--preposition-color); font-weight: 600; }
         
         .spotlight-card.concept h3 { color: var(--concept-color); }
         .spotlight-card.grammar h3 { color: var(--grammar-color); }
@@ -141,39 +132,22 @@
             background-color: white; padding: 12px; border-radius: 8px; border: 1px solid var(--border-color);
         }
         .logic-explanation .contrast p { margin: 0; }
+        .logic-explanation .contrast h4 { margin: 0 0 8px 0; font-family: 'Lexend'; color: var(--text-primary); }
+
+        @media (max-width: 700px) {
+            .facet-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
 
         @media (max-width: 600px) {
-            body {
-                padding: 0; 
-            }
-            .word-lab-card {
-                border-radius: 0; 
-                border-left: none;
-                border-right: none;
-            }
-            .card-header, .facet-controls, .visualizer-area, .analysis-section {
-                padding-left: 16px;
-                padding-right: 16px;
-            }
-            .card-header h1 {
-                font-size: 1.8em; 
-            }
-            .facet-controls {
-                flex-direction: column; 
-                align-items: stretch;   
-            }
-            #visual-formula {
-                font-size: 1.3em;
-                flex-direction: column; 
-                gap: 8px;
-            }
-            .formula-arrow {
-                transform: rotate(90deg); 
-            }
-            .logic-explanation .contrast {
-                grid-template-columns: 1fr; 
-                gap: 16px; 
-            }
+            body { padding: 0; }
+            .word-lab-card { border-radius: 0; border-left: none; border-right: none; }
+            .card-header, .facet-controls, .visualizer-area, .analysis-section { padding-left: 16px; padding-right: 16px; }
+            .card-header h1 { font-size: 1.8em; }
+            #visual-formula { font-size: 1.3em; flex-direction: column; gap: 8px; text-align: center; }
+            .logic-explanation .contrast { grid-template-columns: 1fr; gap: 16px; }
         }
     </style>
 </head>
@@ -181,18 +155,22 @@
 
     <main class="word-lab-card">
         <header class="card-header">
-            <h1>xwe</h1>
-            <p>Die Anatomie des kurdischen Reflexivpronomens "sich".</p>
+            <h1>di navbera ... de</h1>
+            <p>Die Anatomie der kurdischen Präposition für "zwischen".</p>
         </header>
         
         <div class="facet-controls">
-            <button class="facet-btn active" data-facet="reflexive">
-                <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3" /></svg>
-                Reflexive Handlung
+            <button class="facet-btn active" data-facet="two_points">
+                <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18" /></svg>
+                Zwischen zwei Punkten
             </button>
-            <button class="facet-btn" data-facet="possessive">
-                <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z" /></svg>
-                Rückbezüglicher Besitz
+            <button class="facet-btn" data-facet="among_group">
+                <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m-7.5-2.962A3 3 0 0110.5 12a3 3 0 013 3.75m-3.75 0h.008v.015h-.008V15zm-3.75 0h.008v.015h-.008V15zm-3.75 0h.008v.015h-.008V15zM3 12a3 3 0 013-3m9 3a3 3 0 013 3m-3-3a3 3 0 01-3 3m0 0h.008v.015h-.008V15m-3.75 0h.008v.015h-.008V15z" /></svg>
+                Inmitten einer Gruppe
+            </button>
+            <button class="facet-btn" data-facet="abstract">
+                <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" /></svg>
+                Abstrakte Beziehung
             </button>
         </div>
 
@@ -222,10 +200,19 @@
         <section class="analysis-section" style="background-color: #f1f5f9;">
             <h2 class="section-title"><svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" /></svg>Die Logik dahinter</h2>
             <div class="logic-explanation">
-                <p>Das Wort <code>xwe</code> ist eines der mächtigsten Werkzeuge im Kurmancî. Seine Kernfunktion ist es, <strong>immer auf das Subjekt des Satzes zurückzuverweisen</strong>. Dies macht Sätze eindeutig, wo sie im Deutschen mehrdeutig sein können.</p>
-                <p><strong>Die goldene Regel:</strong> <code>xwe</code> ist ein Chamäleon, das sich nicht verändert. Es bedeutet "mich", "dich", "sich", "uns" oder "euch", je nachdem, wer das Subjekt ist. Es ist für alle Personen und Zahlen gleich.</p>
-                <div id="logic-contrast" class="contrast">
-                    <!-- Content injected by JS -->
+                <p>Die kurdische Struktur <code>di navbera ... de</code> ist sehr wörtlich. Sie besteht aus dem Substantiv <code>navber</code>, das "Zwischenraum" bedeutet (von `nav` = Mitte + `ber` = Seite/Front), und der Zirkumposition <code>di ... de</code>, die diesen Raum wie eine Klammer umschließt.</p>
+                <p>Die entscheidende grammatikalische Regel ist, dass alles, was sich <strong>innerhalb</strong> dieser Klammer befindet, in den <strong>Obliquus-Fall</strong> (Zustandsfall) gesetzt werden muss. Die Präposition regiert den Fall der Nomen, auf die sie sich bezieht.</p>
+                <div class="contrast">
+                    <div>
+                        <h4>Grundform (Nominativ)</h4>
+                        <p><code>ez û tu</code> (ich und du)</p>
+                        <p><code>keçik û xort</code> (Mädchen und Junge)</p>
+                    </div>
+                    <div>
+                        <h4>In der Präposition (Obliquus)</h4>
+                        <p><code>di navbera <strong class="highlight">min û te</strong> de</code></p>
+                        <p><code>di navbera <strong class="highlight">keçikê û xortî</strong> de</code></p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -234,43 +221,29 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const visualFormula = document.getElementById('visual-formula');
-            const logicContrast = document.getElementById('logic-contrast');
             const analysisCore = document.getElementById('analysis-core');
             const analysisGrammar = document.getElementById('analysis-grammar');
             const analysisExample = document.getElementById('analysis-example');
             const facetButtons = document.querySelectorAll('.facet-btn');
 
             const data = {
-                reflexive: {
-                    formula: `
-                        <div class="formula-part">Subjekt</div>
-                        <div class="formula-arrow">→</div>
-                        <div class="formula-part">Handlung</div>
-                        <div class="formula-arrow reflexive-arrow">↳</div>
-                        <div class="formula-part reflexive-pronoun">xwe</div>`,
-                    core: "Die Handlung kehrt zum Subjekt zurück. Der Täter ist gleichzeitig das Ziel der eigenen Handlung.",
-                    grammar: "<code>xwe</code> ist <strong>unveränderlich</strong>. Es bleibt immer gleich, egal ob das Subjekt 'ich', 'sie' (Pl.) oder 'er' ist. Es steht als direktes Objekt nach dem Verb.",
-                    example: "Zarok <strong class='highlight'>xwe</strong> dişo.<br><em>(Das Kind wäscht <strong class='highlight'>sich</strong>.)</em><br>Subjekt: <code>Zarok</code>. Handlung: <code>dişo</code>. Ziel: <code>xwe</code> (das Kind selbst).",
-                    contrast: `
-                        <p><strong>Subjekt = Objekt</strong></p>
-                        <p>Ez <strong>xwe</strong> dibînim.<br><em>Ich sehe <strong>mich</strong>.</em></p>
-                        <p>Ew <strong>xwe</strong> dibîne.<br><em>Er/Sie sieht <strong>sich</strong>.</em></p>
-                        <p>Em <strong>xwe</strong> dibînin.<br><em>Wir sehen <strong>uns</strong>.</em></p>`
+                two_points: {
+                    formula: `<div class="formula-part preposition">di navbera</div><div class="formula-part">A <strong style="color:var(--text-secondary)">&</strong> B</div><div class="formula-part preposition">de</div>`,
+                    core: "Definiert den Raum oder die Beziehung, die zwei spezifische, getrennte Entitäten voneinander trennt und zugleich verbindet.",
+                    grammar: "Die Zirkumposition <code>di navbera ... de</code> umschließt die beiden Nomen, die mit <code>û</code> (und) verbunden sind. Beide Nomen müssen im <strong>Obliquus-Fall</strong> stehen.",
+                    example: "Kursî <strong class='highlight'>di navbera</strong> maseyê <strong class='highlight'>û</strong> dolabê <strong class='highlight'>de</strong> ye.<br><em>(Der Stuhl ist <strong class='highlight'>zwischen</strong> dem Tisch <strong class='highlight'>und</strong> dem Schrank.)</em>"
                 },
-                possessive: {
-                    formula: `
-                        <div class="formula-part">Subjekt</div>
-                        <div class="formula-arrow">→</div>
-                        <div class="formula-part">Nomen + Ezafe</div>
-                        <div class="formula-part reflexive-pronoun">xwe</div>`,
-                    core: "Zeigt an, dass etwas dem Subjekt des Satzes gehört. Es löst die Zweideutigkeit von 'sein/ihr' auf.",
-                    grammar: "<code>xwe</code> steht <strong>nach</strong> dem Nomen und wird durch die <strong>Ezafe-Konstruktion</strong> angebunden. Das Nomen erhält eine Ezafe-Endung: <code>-a</code> für Feminina (<code>pirtûk</code> → <code>pirtûka xwe</code>) und <code>-ê</code> für Maskulina (<code>dost</code> → <code>dostê xwe</code>).",
-                    example: "Zîlan pirtûka <strong class='highlight'>xwe</strong> dixwîne.<br><em>(Zîlan liest <strong class='highlight'>ihr (eigenes)</strong> Buch.)</em><br>Das Buch gehört dem Subjekt (Zîlan).",
-                    contrast: `
-                        <p><strong>Besitz des Subjekts:</strong></p>
-                        <p>Ew diçe mala <strong class='highlight'>xwe</strong>.<br><em>(Er geht zu <strong class='highlight'>seinem (eigenen)</strong> Haus.)</em></p>
-                        <p><strong>Besitz einer anderen Person:</strong></p>
-                        <p>Ew diçe mala <strong class='highlight'>wî</strong>.<br><em>(Er geht zu <strong class='highlight'>seinem (fremden)</strong> Haus.)</em></p>`
+                among_group: {
+                    formula: `<div class="formula-part preposition">di navbera</div><div class="formula-part">Gruppe (Pl.)</div><div class="formula-part preposition">de</div>`,
+                    core: "Beschreibt die Position inmitten einer Gruppe von mehr als zwei Elementen, wo die einzelnen Elemente nicht spezifiziert werden.",
+                    grammar: "Hier umschließt die Zirkumposition ein Nomen im <strong>Plural-Obliquus</strong> (meist mit der Endung <code>-an</code>).",
+                    example: "Ew <strong class='highlight'>di navbera</strong> zarokan <strong class='highlight'>de</strong> dilîze.<br><em>(Er/Sie spielt <strong class='highlight'>zwischen</strong> [inmitten] den Kindern.)</em>"
+                },
+                abstract: {
+                    formula: `<div class="formula-part preposition">di navbera</div><div class="formula-part">Konzept A <strong style="color:var(--text-secondary)">&</strong> B</div><div class="formula-part preposition">de</div>`,
+                    core: "Überträgt das räumliche Konzept auf ungreifbare Dinge wie Beziehungen, Unterschiede, Vereinbarungen oder Konflikte.",
+                    grammar: "Die Grammatik bleibt identisch. Die Objekte, die verglichen oder in Beziehung gesetzt werden, stehen im <strong>Obliquus-Fall</strong>.",
+                    example: "<strong class='highlight'>Di navbera</strong> wan <strong class='highlight'>de</strong> hezkirineke mezin heye.<br><em>(<strong class='highlight'>Zwischen</strong> ihnen gibt es eine große Liebe.)</em>"
                 }
             };
 
@@ -286,7 +259,6 @@
                 analysisCore.innerHTML = facetData.core;
                 analysisGrammar.innerHTML = facetData.grammar;
                 analysisExample.innerHTML = facetData.example;
-                logicContrast.innerHTML = facetData.contrast;
             }
 
             facetButtons.forEach(button => {
@@ -299,7 +271,7 @@
             });
 
             // Initial load
-            updateDisplay('reflexive');
+            updateDisplay('two_points');
         });
     </script>
 </body>
