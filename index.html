@@ -324,3 +324,282 @@
 </body>
 </html>
 
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reflexiv-Pronomen-Labor: xwe (sich)</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lexend:wght@600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-primary: #0f172a;
+            --text-secondary: #64748b;
+            --border-color: #e2e8f0;
+            
+            /* Neue Farbpalette für dieses Thema */
+            --reflexive-color: #0d9488; /* Türkis */
+            --concept-color: #2563eb; /* Blau */
+            --grammar-color: #16a34a; /* Grün */
+            --example-color: #475569; /* Schiefergrau */
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            display: grid;
+            place-items: center;
+            min-height: 100vh;
+            padding: 24px;
+        }
+
+        .word-lab-card {
+            width: 100%;
+            max-width: 900px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.07), 0 4px 6px -2px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+        
+        .card-header { padding: 24px 32px; text-align: center; border-bottom: 1px solid var(--border-color); }
+        .card-header h1 { font-family: 'Lexend', sans-serif; font-size: 2.2em; margin: 0; color: var(--reflexive-color);}
+        .card-header p { color: var(--text-secondary); margin: 4px 0 0 0; font-size: 1.1em; }
+        
+        .facet-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            padding: 20px 32px;
+            background-color: #f1f5f9;
+        }
+        .facet-btn {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 10px 16px;
+            font-family: 'Lexend', sans-serif;
+            font-size: 0.9em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-secondary);
+        }
+        .facet-btn:hover {
+            background-color: #f8fafc;
+            border-color: #cbd5e1;
+        }
+        .facet-btn.active {
+            background-color: var(--reflexive-color);
+            color: white;
+            border-color: var(--reflexive-color);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+        }
+
+        .visualizer-area {
+            padding: 40px 32px;
+            min-height: 120px; /* Gibt dem Layout Stabilität beim Umschalten */
+            display: grid;
+            place-items: center;
+        }
+        #visual-formula {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            font-family: 'Lexend', sans-serif;
+            font-size: 1.6em;
+            transition: opacity 0.4s ease;
+        }
+        .formula-part {
+            padding: 12px 20px;
+            border-radius: 8px;
+            background-color: #f1f5f9;
+            border: 2px dashed var(--text-secondary);
+        }
+        .formula-part.reflexive-pronoun {
+            background-color: #f0fdfa;
+            border: 2px solid var(--reflexive-color);
+            color: var(--reflexive-color);
+            font-weight: 700;
+        }
+        .formula-arrow {
+            font-size: 1.2em;
+            color: var(--text-secondary);
+            transition: transform 0.4s ease;
+        }
+        .reflexive-arrow {
+            font-weight: bold;
+            font-size: 2em;
+            line-height: 1;
+            transform: rotate(90deg) scaleX(-1);
+        }
+        
+        .analysis-section { padding: 32px; border-top: 1px solid var(--border-color); }
+        .section-title { font-family: 'Lexend', sans-serif; font-size: 1.3em; margin: 0 0 16px 0; display: flex; align-items: center; gap: 8px; }
+        .analysis-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; }
+        .spotlight-card { background-color: #f8fafc; border: 1px solid var(--border-color); border-radius: 12px; padding: 16px; }
+        .spotlight-card h3 { display: flex; align-items: center; gap: 8px; font-family: 'Lexend', sans-serif; margin: 0 0 8px 0; font-size: 1.1em; }
+        .spotlight-card p { font-size: 0.9em; line-height: 1.6; color: var(--text-secondary); margin: 0; }
+        .spotlight-card code { font-family: monospace; background-color: var(--bg-color); border: 1px solid var(--border-color); padding: 2px 5px; border-radius: 4px; color: var(--text-primary); }
+        .spotlight-card strong.highlight { color: var(--reflexive-color); font-weight: 600; }
+        
+        .spotlight-card.concept h3 { color: var(--concept-color); }
+        .spotlight-card.grammar h3 { color: var(--grammar-color); }
+        .spotlight-card.example h3 { color: var(--example-color); }
+
+        .logic-explanation p, .logic-explanation ul { font-size: 1em; line-height: 1.7; color: var(--text-primary); margin: 0 0 1em 0; }
+        .logic-explanation ul { padding-left: 20px; }
+        .logic-explanation .contrast {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+            background-color: white; padding: 12px; border-radius: 8px; border: 1px solid var(--border-color);
+        }
+        .logic-explanation .contrast p { margin: 0; }
+
+        @media (max-width: 600px) {
+            .facet-controls { flex-direction: column; align-items: stretch; }
+            #visual-formula { font-size: 1.2em; }
+            .logic-explanation .contrast { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <main class="word-lab-card">
+        <header class="card-header">
+            <h1>xwe</h1>
+            <p>Die Anatomie des kurdischen Reflexivpronomens "sich".</p>
+        </header>
+        
+        <div class="facet-controls">
+            <button class="facet-btn active" data-facet="reflexive">
+                <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3" /></svg>
+                Reflexive Handlung
+            </button>
+            <button class="facet-btn" data-facet="possessive">
+                <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z" /></svg>
+                Rückbezüglicher Besitz
+            </button>
+        </div>
+
+        <div class="visualizer-area">
+            <div id="visual-formula">
+                <!-- Content will be injected by JavaScript -->
+            </div>
+        </div>
+        
+        <section class="analysis-section">
+            <div id="analysis-grid" class="analysis-grid">
+                <div class="spotlight-card concept">
+                    <h3><svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" /></svg>Kernkonzept</h3>
+                    <p id="analysis-core"></p>
+                </div>
+                <div class="spotlight-card grammar">
+                    <h3><svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" /></svg>Grammatik-Regel</h3>
+                    <p id="analysis-grammar"></p>
+                </div>
+                <div class="spotlight-card example">
+                    <h3><svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.125 2.25h-4.5c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125v-9M10.125 2.25h.375a9 9 0 019 9v.375M10.125 2.25A3.375 3.375 0 0113.5 5.625v1.5c0 .621.504 1.125 1.125 1.125h1.5a3.375 3.375 0 013.375 3.375M9 15l2.25 2.25L15 12" /></svg>Beispielsatz</h3>
+                    <p id="analysis-example"></p>
+                </div>
+            </div>
+        </section>
+
+        <section class="analysis-section" style="background-color: #f1f5f9;">
+            <h2 class="section-title"><svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" /></svg>Die Logik dahinter</h2>
+            <div class="logic-explanation">
+                <p>Das Wort <code>xwe</code> ist eines der mächtigsten Werkzeuge im Kurmancî. Seine Kernfunktion ist es, <strong>immer auf das Subjekt des Satzes zurückzuverweisen</strong>. Dies macht Sätze eindeutig, wo sie im Deutschen mehrdeutig sein können.</p>
+                <p><strong>Die goldene Regel:</strong> <code>xwe</code> ist ein Chamäleon, das sich nicht verändert. Es bedeutet "mich", "dich", "sich", "uns" oder "euch", je nachdem, wer das Subjekt ist. Es ist für alle Personen und Zahlen gleich.</p>
+                <div id="logic-contrast" class="contrast">
+                    <!-- Content injected by JS -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const visualFormula = document.getElementById('visual-formula');
+            const logicContrast = document.getElementById('logic-contrast');
+            const analysisCore = document.getElementById('analysis-core');
+            const analysisGrammar = document.getElementById('analysis-grammar');
+            const analysisExample = document.getElementById('analysis-example');
+            const facetButtons = document.querySelectorAll('.facet-btn');
+
+            const data = {
+                reflexive: {
+                    formula: `
+                        <div class="formula-part">Subjekt</div>
+                        <div class="formula-arrow">→</div>
+                        <div class="formula-part">Handlung</div>
+                        <div class="formula-arrow reflexive-arrow">↳</div>
+                        <div class="formula-part reflexive-pronoun">xwe</div>`,
+                    core: "Die Handlung kehrt zum Subjekt zurück. Der Täter ist gleichzeitig das Ziel der eigenen Handlung.",
+                    grammar: "<code>xwe</code> ist <strong>unveränderlich</strong>. Es bleibt immer gleich, egal ob das Subjekt 'ich', 'sie' (Pl.) oder 'er' ist. Es steht als direktes Objekt nach dem Verb.",
+                    example: "Zarok <strong class='highlight'>xwe</strong> dişo.<br><em>(Das Kind wäscht <strong class='highlight'>sich</strong>.)</em><br>Subjekt: <code>Zarok</code>. Handlung: <code>dişo</code>. Ziel: <code>xwe</code> (das Kind selbst).",
+                    contrast: `
+                        <p><strong>Subjekt = Objekt</strong></p>
+                        <p>Ez <strong>xwe</strong> dibînim.<br><em>Ich sehe <strong>mich</strong>.</em></p>
+                        <p>Ew <strong>xwe</strong> dibîne.<br><em>Er/Sie sieht <strong>sich</strong>.</em></p>
+                        <p>Em <strong>xwe</strong> dibînin.<br><em>Wir sehen <strong>uns</strong>.</em></p>`
+                },
+                possessive: {
+                    formula: `
+                        <div class="formula-part">Subjekt</div>
+                        <div class="formula-arrow">→</div>
+                        <div class="formula-part">Nomen + Izafe</div>
+                        <div class="formula-part reflexive-pronoun">xwe</div>`,
+                    core: "Zeigt an, dass etwas dem Subjekt des Satzes gehört. Es löst die Zweideutigkeit von 'sein/ihr' auf.",
+                    grammar: "<code>xwe</code> steht <strong>nach</strong> dem Nomen und erzwingt die <strong>Izafe-Konstruktion</strong>. Das Nomen davor muss in den Obliquus-Fall. Z.B. <code>pirtûk</code> → <code>pirtûka xwe</code>.",
+                    example: "Zîlan pirtûka <strong class='highlight'>xwe</strong> dixwîne.<br><em>(Zîlan liest <strong class='highlight'>ihr (eigenes)</strong> Buch.)</em><br>Das Buch gehört dem Subjekt (Zîlan).",
+                    contrast: `
+                        <p><strong>Besitz des Subjekts:</strong></p>
+                        <p>Ew diçe mala <strong class='highlight'>xwe</strong>.<br><em>(Er geht zu <strong class='highlight'>seinem (eigenen)</strong> Haus.)</em></p>
+                        <p><strong>Besitz einer anderen Person:</strong></p>
+                        <p>Ew diçe mala <strong class='highlight'>wî</strong>.<br><em>(Er geht zu <strong class='highlight'>seinem (fremden)</strong> Haus.)</em></p>`
+                }
+            };
+
+            function updateDisplay(facet) {
+                const facetData = data[facet];
+                
+                visualFormula.style.opacity = 0;
+                setTimeout(() => {
+                    visualFormula.innerHTML = facetData.formula;
+                    visualFormula.style.opacity = 1;
+                }, 300);
+
+                analysisCore.innerHTML = facetData.core;
+                analysisGrammar.innerHTML = facetData.grammar;
+                analysisExample.innerHTML = facetData.example;
+                logicContrast.innerHTML = facetData.contrast;
+            }
+
+            facetButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    facetButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    const selectedFacet = button.getAttribute('data-facet');
+                    updateDisplay(selectedFacet);
+                });
+            });
+
+            // Initial load
+            updateDisplay('reflexive');
+        });
+    </script>
+</body>
+</html>
+
