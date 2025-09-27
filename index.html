@@ -30,7 +30,7 @@
             display: grid;
             place-items: center;
             min-height: 100vh;
-            padding: 16px; /* Etwas Padding für den Body auf allen Größen */
+            padding: 16px; 
         }
 
         .word-lab-card {
@@ -142,13 +142,12 @@
         }
         .logic-explanation .contrast p { margin: 0; }
 
-        /* --- MOBILE OPTIMIERUNGEN --- */
         @media (max-width: 600px) {
             body {
                 padding: 0; 
             }
             .word-lab-card {
-                border-radius: 0; /* Ecken gehen bis zum Rand */
+                border-radius: 0; 
                 border-left: none;
                 border-right: none;
             }
@@ -157,26 +156,23 @@
                 padding-right: 16px;
             }
             .card-header h1 {
-                font-size: 1.8em; /* Kleinere Überschrift */
+                font-size: 1.8em; 
             }
             .facet-controls {
-                flex-direction: column; /* Knöpfe untereinander */
-                align-items: stretch;   /* Knöpfe auf volle Breite strecken */
+                flex-direction: column; 
+                align-items: stretch;   
             }
             #visual-formula {
                 font-size: 1.3em;
-                flex-direction: column; /* Formel vertikal anordnen */
+                flex-direction: column; 
                 gap: 8px;
             }
             .formula-arrow {
-                transform: rotate(90deg); /* Pfeile nach unten drehen */
-            }
-            .reflexive-arrow {
-                /* Der Bogenpfeil sieht auch vertikal gut aus, keine Änderung nötig */
+                transform: rotate(90deg); 
             }
             .logic-explanation .contrast {
-                grid-template-columns: 1fr; /* Vergleichsboxen einspaltig */
-                gap: 16px; /* Mehr Abstand zwischen den gestapelten Elementen */
+                grid-template-columns: 1fr; 
+                gap: 16px; 
             }
         }
     </style>
@@ -268,7 +264,7 @@
                         <div class="formula-part">Nomen + Ezafe</div>
                         <div class="formula-part reflexive-pronoun">xwe</div>`,
                     core: "Zeigt an, dass etwas dem Subjekt des Satzes gehört. Es löst die Zweideutigkeit von 'sein/ihr' auf.",
-                    grammar: "<code>xwe</code> steht <strong>nach</strong> dem Nomen und erzwingt die <strong>Ezafe-Konstruktion</strong>. Das Nomen davor muss in den Obliquus-Fall. Z.B. <code>pirtûk</code> → <code>pirtûka xwe</code>.",
+                    grammar: "<code>xwe</code> steht <strong>nach</strong> dem Nomen und wird durch die <strong>Ezafe-Konstruktion</strong> angebunden. Das Nomen erhält eine Ezafe-Endung: <code>-a</code> für Feminina (<code>pirtûk</code> → <code>pirtûka xwe</code>) und <code>-ê</code> für Maskulina (<code>dost</code> → <code>dostê xwe</code>).",
                     example: "Zîlan pirtûka <strong class='highlight'>xwe</strong> dixwîne.<br><em>(Zîlan liest <strong class='highlight'>ihr (eigenes)</strong> Buch.)</em><br>Das Buch gehört dem Subjekt (Zîlan).",
                     contrast: `
                         <p><strong>Besitz des Subjekts:</strong></p>
@@ -308,5 +304,3 @@
     </script>
 </body>
 </html>
-
-
