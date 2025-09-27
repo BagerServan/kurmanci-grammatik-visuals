@@ -17,7 +17,6 @@
             --text-secondary: #64748b;
             --border-color: #e2e8f0;
             
-            /* Neue Farbpalette für dieses Thema */
             --reflexive-color: #0d9488; /* Türkis */
             --concept-color: #2563eb; /* Blau */
             --grammar-color: #16a34a; /* Grün */
@@ -31,7 +30,7 @@
             display: grid;
             place-items: center;
             min-height: 100vh;
-            padding: 24px;
+            padding: 16px; /* Etwas Padding für den Body auf allen Größen */
         }
 
         .word-lab-card {
@@ -68,6 +67,7 @@
             transition: all 0.2s ease;
             display: flex;
             align-items: center;
+            justify-content: center; /* Zentriert den Inhalt */
             gap: 8px;
             color: var(--text-secondary);
         }
@@ -84,7 +84,7 @@
 
         .visualizer-area {
             padding: 40px 32px;
-            min-height: 120px; /* Gibt dem Layout Stabilität beim Umschalten */
+            min-height: 120px;
             display: grid;
             place-items: center;
         }
@@ -142,10 +142,42 @@
         }
         .logic-explanation .contrast p { margin: 0; }
 
+        /* --- MOBILE OPTIMIERUNGEN --- */
         @media (max-width: 600px) {
-            .facet-controls { flex-direction: column; align-items: stretch; }
-            #visual-formula { font-size: 1.2em; }
-            .logic-explanation .contrast { grid-template-columns: 1fr; }
+            body {
+                padding: 0; /* Kein Padding am Body, damit die Karte die volle Breite nutzen kann */
+            }
+            .word-lab-card {
+                border-radius: 0; /* Ecken gehen bis zum Rand */
+                border-left: none;
+                border-right: none;
+            }
+            .card-header, .facet-controls, .visualizer-area, .analysis-section {
+                padding-left: 16px;
+                padding-right: 16px;
+            }
+            .card-header h1 {
+                font-size: 1.8em; /* Kleinere Überschrift */
+            }
+            .facet-controls {
+                flex-direction: column; /* Knöpfe untereinander */
+                align-items: stretch;   /* Knöpfe auf volle Breite strecken */
+            }
+            #visual-formula {
+                font-size: 1.3em;
+                flex-direction: column; /* Formel vertikal anordnen */
+                gap: 8px;
+            }
+            .formula-arrow {
+                transform: rotate(90deg); /* Pfeile nach unten drehen */
+            }
+            .reflexive-arrow {
+                /* Der Bogenpfeil sieht auch vertikal gut aus, keine Änderung nötig */
+            }
+            .logic-explanation .contrast {
+                grid-template-columns: 1fr; /* Vergleichsboxen einspaltig */
+                gap: 16px; /* Mehr Abstand zwischen den gestapelten Elementen */
+            }
         }
     </style>
 </head>
@@ -170,7 +202,7 @@
 
         <div class="visualizer-area">
             <div id="visual-formula">
-                <!-- Content will be injected by JavaScript -->
+                <!-- Content wird per JavaScript geladen -->
             </div>
         </div>
         
